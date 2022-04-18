@@ -1,25 +1,30 @@
 package chapter05
 
-import scala.annotation.tailrec
-
 object Test10_Recursion {
     def main(args: Array[String]): Unit = {
-        println(factorial(0))
-        println(factorial(5))
-        // println(factorial(500000000)) // StackOverflowError
-        println(tailFactorial(0))
-        println(tailFactorial(5))
-        println(tailFactorial(500000000))
-    }
+        def factorial(i: Long): Long =
+            if (i == 0)
+                1
+            else {
+                val tmp = factorial(i - 1)
+                i * tmp
+            }
 
-    def factorial(i: Int): Int = if (i == 0) 1 else i * factorial(i - 1)
+        println(factorial(4))
+        println(factorial(25))
 
-    // 尾递归
-    def tailFactorial(i: Int): Int = {
-        @tailrec
-        def loop(i: Int, temp: Int = 1): Int = if (i == 0) temp else loop(i - 1, temp * i)
+        // 尾递归
+        def tailFactorial(i: Long): Long = {
+            def loop(i: Long, temp: Long = 1): Long =
+                if (i == 0)
+                    temp
+                else {
+                    val tmp = loop(i - 1, temp * i)
+                    tmp
+                }
 
-        loop(i)
+            loop(i)
+        }
     }
 
 }
